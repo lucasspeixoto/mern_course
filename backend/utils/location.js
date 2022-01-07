@@ -5,7 +5,7 @@ const HttpError = require("../models/http-error");
 const getCoordsForAddress = async (address) => {
   const url = `https://nominatim.openstreetmap.org/?addressdetails=1&q=${encodeURIComponent(
     address
-  )}&format=json&limit=1`;
+  )}&format=json&limit=10`;
 
   const response = await axios.get(url);
   const data = response.data;
