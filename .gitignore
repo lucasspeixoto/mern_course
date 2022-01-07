@@ -104,3 +104,5 @@ dist
 .tern-port
 
 /material
+
+envs.js
