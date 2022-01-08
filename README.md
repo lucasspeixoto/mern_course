@@ -26,7 +26,6 @@ Esse projeto foi desenvolvido com as seguintes tecnologias/bibliotecas:
 
 ![caption](frontend/public/assets/presentation.gif)
 
-
 ## 🚀 Instalação Frontend
 
 ```bash
@@ -46,6 +45,7 @@ $ yarn start
 # Abra http://localhost:3000 no seu navegador para ver a aplicação rodando!
 
 ```
+
 ## 🚀 Instalação Backend
 
 ```bash

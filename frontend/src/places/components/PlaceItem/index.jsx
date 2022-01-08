@@ -35,7 +35,7 @@ const PlaceItem = ({
   const [showDelete, setShowDelete] = useState(false);
   const { isLoading, sendRequest } = useHttp();
 
-  const { isLogged, userId } = useAuth();
+  const { userId } = useAuth();
 
   const deletePlaceHandler = async () => {
     const url = `http://localhost:5000/api/places/${placeId}`;
@@ -53,7 +53,7 @@ const PlaceItem = ({
 
   return (
     <React.Fragment>
-      <Toaster position='top-right' reverseOrder={false} />
+      <Toaster position="top-right" reverseOrder={false} />
       {/* Map Modal */}
       <Modal
         show={showMap}
@@ -69,7 +69,7 @@ const PlaceItem = ({
       <Modal
         show={showDelete}
         onCancel={() => setShowDelete(false)}
-        header='Are you sure ?'
+        header="Are you sure ?"
         footer={
           <>
             <ButtonsContainer>

@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 const NewPlace = () => {
   const { isLoading, sendRequest } = useHttp();
   const { userId } = useAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formState, inputHandler] = useForm(
     {
       title: {
@@ -54,7 +54,7 @@ const NewPlace = () => {
         }
       );
 
-      navigate('/')
+      navigate("/");
     } catch (err) {
       toast.error(err.message, {
         style: { background: "#2b2b2b", color: "#fff" },
@@ -65,41 +65,41 @@ const NewPlace = () => {
 
   return (
     <React.Fragment>
-      <Toaster position='top-right' reverseOrder={false} />
+      <Toaster position="top-right" reverseOrder={false} />
       <Form onSubmit={placeSubmitHandler}>
         {isLoading ? <LoadingSpinner /> : null}
         <Input
-          id='title'
-          element='input'
-          type='text'
-          label='Title'
+          id="title"
+          element="input"
+          type="text"
+          label="Title"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText='Please enter a valid title.'
+          errorText="Please enter a valid title."
           onInput={inputHandler}
           initialValue={formState.inputs.title.value}
           initialValid={formState.inputs.title.isValid}
         />
         <Input
-          id='description'
-          element='textarea'
-          label='Description'
+          id="description"
+          element="textarea"
+          label="Description"
           validators={[VALIDATOR_MINLENGTH(5)]}
-          errorText='Please enter a valid description (at least 5 characters).'
+          errorText="Please enter a valid description (at least 5 characters)."
           onInput={inputHandler}
           initialValue={formState.inputs.description.value}
           initialValid={formState.inputs.description.isValid}
         />
         <Input
-          id='address'
-          element='input'
-          label='Address'
+          id="address"
+          element="input"
+          label="Address"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText='Please enter a valid address.'
+          errorText="Please enter a valid address."
           onInput={inputHandler}
           initialValue={formState.inputs.address.value}
           initialValid={formState.inputs.address.isValid}
         />
-        <Button type='submit' disabled={!formState.isValid && isLoading}>
+        <Button type="submit" disabled={!formState.isValid && isLoading}>
           Add Place
         </Button>
       </Form>

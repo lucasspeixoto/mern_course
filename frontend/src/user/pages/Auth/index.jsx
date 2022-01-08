@@ -112,55 +112,55 @@ const Auth = () => {
   return (
     <React.Fragment>
       {isLoading ? <LoadingSpinner asOverlay /> : null}
-      <Toaster position='top-right' reverseOrder={false} />
+      <Toaster position="top-right" reverseOrder={false} />
       <Form onSubmit={authSubmitHandler}>
         {isLoginMode ? (
-          <h2 className='center'>Login</h2>
+          <h2 className="center">Login</h2>
         ) : (
-          <h2 className='center'>Create Account</h2>
+          <h2 className="center">Create Account</h2>
         )}
         <hr />
         {!isLoginMode && (
           <Input
-            id='name'
-            element='input'
-            type='text'
-            label='User Name'
+            id="name"
+            element="input"
+            type="text"
+            label="User Name"
             validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
-            errorText='Please enter a valid name (at least 5 characters).'
+            errorText="Please enter a valid name (at least 5 characters)."
             onInput={inputHandler}
           />
         )}
         <Input
-          id='email'
-          element='input'
-          type='text'
-          label='Email'
+          id="email"
+          element="input"
+          type="text"
+          label="Email"
           validators={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
-          errorText='Please enter a valid e-mail.'
+          errorText="Please enter a valid e-mail."
           onInput={inputHandler}
         />
         <Input
-          id='password'
-          element='input'
-          type='password'
-          label='Password'
+          id="password"
+          element="input"
+          type="password"
+          label="Password"
           validators={[VALIDATOR_MINLENGTH(6)]}
-          errorText='Please enter a valid password (at least 6 characters).'
+          errorText="Please enter a valid password (at least 6 characters)."
           onInput={inputHandler}
         />
         <ButtonContainer>
           <Button
-            className='center'
-            type='submit'
+            className="center"
+            type="submit"
             disabled={!formState.isValid}
           >
             {isLoginMode ? "Login" : "Signup"}
           </Button>
           <Button
             inverse
-            className='center'
-            type='button'
+            className="center"
+            type="button"
             onClick={switchModeHandler}
           >
             {isLoginMode ? "Create Account" : "Go to Login"}

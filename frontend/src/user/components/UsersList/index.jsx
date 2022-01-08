@@ -6,7 +6,7 @@ import { UsersItemsList } from "./styles";
 const UsersList = ({ items }) => {
   if (items.length === 0) {
     return (
-      <div className='center'>
+      <div className="center">
         <h2>No users found.</h2>
       </div>
     );

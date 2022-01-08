@@ -17,7 +17,7 @@ const UserPlaces = () => {
       try {
         const responseData = await sendRequest(url);
         setLoadedPlaces(responseData.places);
-      } catch (err) { 
+      } catch (err) {
         setLoadedPlaces([]);
         toast.error(err.message, {
           style: { background: "#2b2b2b", color: "#fff" },
@@ -30,14 +30,18 @@ const UserPlaces = () => {
   }, [sendRequest, userId]);
 
   const deletePlaceHandler = (deletedPlaceId) => {
-    setLoadedPlaces(prevPlaces => prevPlaces.filter(place => place.id !== deletedPlaceId));
-  }
+    setLoadedPlaces((prevPlaces) =>
+      prevPlaces.filter((place) => place.id !== deletedPlaceId)
+    );
+  };
 
   return (
     <React.Fragment>
-      <Toaster position='top-right' reverseOrder={false} />
+      <Toaster position="top-right" reverseOrder={false} />
       {isLoading ? <LoadingSpinner /> : null}
-      {!isLoading && loadedPlaces ? <PlaceList items={loadedPlaces} onDeletePlace={deletePlaceHandler}/> : null}
+      {!isLoading && loadedPlaces ? (
+        <PlaceList items={loadedPlaces} onDeletePlace={deletePlaceHandler} />
+      ) : null}
     </React.Fragment>
   );
 };

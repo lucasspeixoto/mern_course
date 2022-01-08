@@ -24,7 +24,8 @@ export const Container = styled.div`
     padding: 0.15rem 0.25rem;
   }
 
-  input, textarea {
+  input,
+  textarea {
     &:focus {
       outline: none;
       background: #ebebeb;

@@ -8,7 +8,7 @@ const NavLinks = () => {
   return (
     <List>
       <li>
-        <NavLink exact='true' to='/'>
+        <NavLink exact="true" to="/">
           All Users
         </NavLink>
       </li>
@@ -19,19 +19,19 @@ const NavLinks = () => {
       )}
       {isLogged && (
         <li>
-          <NavLink to='/places/new'>Add Place</NavLink>
+          <NavLink to="/places/new">Add Place</NavLink>
         </li>
       )}
 
       {isLogged ? (
         <li>
-          <NavLink to='/auth' onClick={logout}>
+          <NavLink to="/auth" onClick={logout}>
             Logout
           </NavLink>
         </li>
       ) : (
         <li>
-          <NavLink to='/auth'>Auth</NavLink>
+          <NavLink to="/auth">Auth</NavLink>
         </li>
       )}
     </List>

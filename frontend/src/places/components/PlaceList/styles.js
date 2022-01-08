@@ -24,4 +24,3 @@ export const List = styled.ul`
   width: 90%;
   max-width: 40rem;
 `;
-

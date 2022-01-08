@@ -126,7 +126,7 @@ const UpdatePlace = () => {
 
   if (!loadedPlace) {
     return (
-      <div className='center'>
+      <div className="center">
         <h2>Could not find place!</h2>
       </div>
     );
@@ -134,33 +134,33 @@ const UpdatePlace = () => {
 
   return (
     <React.Fragment>
-      <Toaster position='top-right' reverseOrder={false} />
+      <Toaster position="top-right" reverseOrder={false} />
 
       {!isLoading && loadedPlace ? (
         <Form onSubmit={placeUpdateSubmitHandler}>
           <Input
-            id='title'
-            element='input'
-            type='text'
-            label='Title'
+            id="title"
+            element="input"
+            type="text"
+            label="Title"
             validators={[VALIDATOR_REQUIRE()]}
-            errorText='Please enter a new valid title.'
+            errorText="Please enter a new valid title."
             onInput={inputHandler}
             initialValue={loadedPlace.title}
             initialValid={true}
           />
           <Input
-            id='description'
-            element='textarea'
-            label='Description'
+            id="description"
+            element="textarea"
+            label="Description"
             validators={[VALIDATOR_MINLENGTH(5)]}
-            errorText='Please enter a new valid description (min. 5 characters).'
+            errorText="Please enter a new valid description (min. 5 characters)."
             onInput={inputHandler}
             initialValue={loadedPlace.description}
             initialValid={true}
           />
           <ButtonsContainer>
-            <Button type='submit' disabled={!formState.isValid}>
+            <Button type="submit" disabled={!formState.isValid}>
               Update
             </Button>
             <BackLink to={`/${userId}/places`}>Go Back</BackLink>

@@ -29,7 +29,7 @@ const Users = () => {
 
   return (
     <React.Fragment>
-      <Toaster position='top-right' reverseOrder={false} />
+      <Toaster position="top-right" reverseOrder={false} />
       {isLoading && users ? <LoadingSpinner /> : <UsersList items={users} />}
     </React.Fragment>
   );

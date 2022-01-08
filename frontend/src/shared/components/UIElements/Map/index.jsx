@@ -24,7 +24,7 @@ const Map = ({ className, style, center, zoom }) => {
       ref={mapRef}
       className={className}
       style={style}
-      id='map'
+      id="map"
     ></Container>
   );
 };

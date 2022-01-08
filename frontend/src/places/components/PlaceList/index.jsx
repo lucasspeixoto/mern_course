@@ -6,9 +6,9 @@ import { Container, Card, List } from "./styles";
 const PlaceList = ({ items, onDeletePlace }) => {
   if (items.length === 0) {
     return (
-      <Container className='center'>
+      <Container className="center">
         <Card>
-        <h2>No places found. Maybe create one?</h2>
+          <h2>No places found. Maybe create one?</h2>
           <Button to="/places/new">Share Place</Button>
         </Card>
       </Container>

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export const Form = styled.form`
   list-style: none;
@@ -24,4 +24,4 @@ export const ButtonsContainer = styled.div`
 export const BackLink = styled(Link)`
   color: #1e409c;
   text-decoration: none;
-`
+`;
