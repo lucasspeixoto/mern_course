@@ -35,13 +35,15 @@ const PlaceItem = ({
   const [showDelete, setShowDelete] = useState(false);
   const { isLoading, sendRequest } = useHttp();
 
-  const { userId } = useAuth();
+  const { userId, token } = useAuth();
 
   const deletePlaceHandler = async () => {
     const url = `http://localhost:5000/api/places/${placeId}`;
     setShowDelete(false);
     try {
-      await sendRequest(url, "DELETE");
+      await sendRequest(url, "DELETE", null, {
+        Authorization: `Bearer ${token}`,
+      });
       onDelete(placeId);
     } catch (err) {
       toast.error(err.message, {
@@ -53,7 +55,7 @@ const PlaceItem = ({
 
   return (
     <React.Fragment>
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position='top-right' reverseOrder={false} />
       {/* Map Modal */}
       <Modal
         show={showMap}
@@ -69,7 +71,7 @@ const PlaceItem = ({
       <Modal
         show={showDelete}
         onCancel={() => setShowDelete(false)}
-        header="Are you sure ?"
+        header='Are you sure ?'
         footer={
           <>
             <ButtonsContainer>
@@ -98,7 +100,7 @@ const PlaceItem = ({
         <ListItem>
           <Card>
             <ImageContainer>
-              <img src={image} alt={title} />
+              <img src={`http://localhost:5000/${image}`} alt={title} />
             </ImageContainer>
 
             <InfoContainer>
