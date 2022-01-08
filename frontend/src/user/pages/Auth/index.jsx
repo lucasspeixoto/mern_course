@@ -10,6 +10,7 @@ import {
 import { useAuth } from "../../../core/hooks/useAuth";
 import { useForm } from "../../../core/hooks/useForm";
 import { useHttp } from "../../../core/hooks/useHttp";
+import ImageUpload from "../../../shared/components/FormElements/ImageUpload";
 import Input from "../../../shared/components/FormElements/Input";
 import LoadingSpinner from "../../../shared/components/UIElements/LoadingSpinner";
 
@@ -42,6 +43,7 @@ const Auth = () => {
         {
           ...formState.inputs,
           name: undefined,
+          image: undefined,
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
@@ -51,6 +53,10 @@ const Auth = () => {
           ...formState.inputs,
           name: {
             value: "",
+            isValid: false,
+          },
+          image: {
+            value: null,
             isValid: false,
           },
         },
@@ -86,17 +92,15 @@ const Auth = () => {
       }
     } else {
       try {
+        const formData = new FormData(); //Automaticamente inclui o headers na requisição
+        formData.append("email", formState.inputs.email.value);
+        formData.append("name", formState.inputs.name.value);
+        formData.append("password", formState.inputs.password.value);
+        formData.append("image", formState.inputs.image.value);
         const responseData = await sendRequest(
           "http://localhost:5000/api/users/signup",
           "POST",
-          JSON.stringify({
-            name: formState.inputs.name.value,
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
-          }),
-          {
-            "Content-Type": "application/json",
-          }
+          formData
         );
 
         login(responseData.user.id);
@@ -112,55 +116,62 @@ const Auth = () => {
   return (
     <React.Fragment>
       {isLoading ? <LoadingSpinner asOverlay /> : null}
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position='top-right' reverseOrder={false} />
       <Form onSubmit={authSubmitHandler}>
         {isLoginMode ? (
-          <h2 className="center">Login</h2>
+          <h2 className='center'>Login</h2>
         ) : (
-          <h2 className="center">Create Account</h2>
+          <h2 className='center'>Create Account</h2>
         )}
         <hr />
         {!isLoginMode && (
           <Input
-            id="name"
-            element="input"
-            type="text"
-            label="User Name"
+            id='name'
+            element='input'
+            type='text'
+            label='User Name'
             validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
-            errorText="Please enter a valid name (at least 5 characters)."
+            errorText='Please enter a valid name (at least 5 characters).'
             onInput={inputHandler}
           />
         )}
+        {!isLoginMode ? (
+          <ImageUpload
+            id='image'
+            onInput={inputHandler}
+            errorText='Please provide an image.'
+          />
+        ) : null}
         <Input
-          id="email"
-          element="input"
-          type="text"
-          label="Email"
+          id='email'
+          element='input'
+          type='text'
+          label='Email'
           validators={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
-          errorText="Please enter a valid e-mail."
+          errorText='Please enter a valid e-mail.'
           onInput={inputHandler}
         />
         <Input
-          id="password"
-          element="input"
-          type="password"
-          label="Password"
+          id='password'
+          element='input'
+          type='password'
+          label='Password'
           validators={[VALIDATOR_MINLENGTH(6)]}
-          errorText="Please enter a valid password (at least 6 characters)."
+          errorText='Please enter a valid password (at least 6 characters).'
           onInput={inputHandler}
         />
         <ButtonContainer>
           <Button
-            className="center"
-            type="submit"
+            className='center'
+            type='submit'
             disabled={!formState.isValid}
           >
             {isLoginMode ? "Login" : "Signup"}
           </Button>
           <Button
             inverse
-            className="center"
-            type="button"
+            className='center'
+            type='button'
             onClick={switchModeHandler}
           >
             {isLoginMode ? "Create Account" : "Go to Login"}

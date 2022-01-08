@@ -1,5 +1,3 @@
-/* const { v4: uuidv4 } = require('uuid'); */
-/* const uuid = require("uuid").v4; */
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
 
@@ -55,8 +53,7 @@ const signup = async (req, res, next) => {
   const createdUser = new User({
     name,
     email,
-    image:
-      "https://lh3.googleusercontent.com/a-/AOh14Gj37hwEKTk89_dqJj5ysJeo3PeQtRsf9t3FPyjdRQ=s96-c",
+    image: req.file.path,
     password,
     places: [],
   });

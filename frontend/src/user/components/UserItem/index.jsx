@@ -15,7 +15,7 @@ const UserItem = ({ id, image, name, placeCount }) => {
       <UserItemCard>
         <UserItemLink to={`/${id}/places`}>
           <UserItemImage>
-            <Avatar image={image} alt={name} />
+            <Avatar image={`http://localhost:5000/${image}`} alt={name} />
           </UserItemImage>
           <UserItemInfo>
             <h2>{name}</h2>

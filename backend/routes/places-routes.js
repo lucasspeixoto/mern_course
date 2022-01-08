@@ -3,6 +3,8 @@ const { check } = require("express-validator"); // Retorna um novo middleware co
 
 const placeControllers = require("../controllers/places-controllers");
 
+const fileUpload = require("../middleware/file-upload");
+
 const router = express.Router(); // Para registrat middleares
 
 router.get("/:pid", placeControllers.getPlaceById);
@@ -11,6 +13,7 @@ router.get("/user/:uid", placeControllers.getPlacesByUserId);
 
 router.post(
   "/",
+  fileUpload.single("image"), // 'image' == body ref
   [
     check("title").not().isEmpty(),
     check("description").isLength({ min: 5 }),

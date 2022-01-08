@@ -53,7 +53,7 @@ const PlaceItem = ({
 
   return (
     <React.Fragment>
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position='top-right' reverseOrder={false} />
       {/* Map Modal */}
       <Modal
         show={showMap}
@@ -69,7 +69,7 @@ const PlaceItem = ({
       <Modal
         show={showDelete}
         onCancel={() => setShowDelete(false)}
-        header="Are you sure ?"
+        header='Are you sure ?'
         footer={
           <>
             <ButtonsContainer>
@@ -98,7 +98,7 @@ const PlaceItem = ({
         <ListItem>
           <Card>
             <ImageContainer>
-              <img src={image} alt={title} />
+              <img src={`http://localhost:5000/${image}`} alt={title} />
             </ImageContainer>
 
             <InfoContainer>
