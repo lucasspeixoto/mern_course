@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+
+import toast, { Toaster } from "react-hot-toast";
 
 import {
   VALIDATOR_MINLENGTH,
@@ -7,15 +9,15 @@ import {
 } from "../../../core/helpers/validators";
 import { useAuth } from "../../../core/hooks/useAuth";
 import { useForm } from "../../../core/hooks/useForm";
+import { useHttp } from "../../../core/hooks/useHttp";
 import Input from "../../../shared/components/FormElements/Input";
+import LoadingSpinner from "../../../shared/components/UIElements/LoadingSpinner";
 
 import Button from "./../../../shared/components/FormElements/Button/index";
 import { ButtonContainer, Form } from "./styles";
-import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const navigate = useNavigate();
   const { login } = useAuth();
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -31,7 +33,9 @@ const Auth = () => {
     false
   );
 
-  const switchModeHandler = () => {
+  const { sendRequest, isLoading } = useHttp();
+
+  const switchModeHandler = useCallback(() => {
     if (!isLoginMode) {
       //delete formState.inputs.name;
       setFormData(
@@ -54,16 +58,61 @@ const Auth = () => {
       );
     }
     setIsLoginMode((prevMode) => !prevMode);
-  };
+  }, [formState.inputs, isLoginMode, setFormData]);
 
-  const authSubmitHandler = (event) => {
+  const authSubmitHandler = async (event) => {
     event.preventDefault();
-    login();
-    navigate("/u1/places");
+
+    if (isLoginMode) {
+      try {
+        const responseData = await sendRequest(
+          "http://localhost:5000/api/users/login",
+          "POST",
+          JSON.stringify({
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          }),
+          {
+            "Content-Type": "application/json",
+          }
+        );
+
+        login(responseData.user.id);
+      } catch (err) {
+        toast.error(err.message, {
+          style: { background: "#2b2b2b", color: "#fff" },
+          duration: 2000,
+        });
+      }
+    } else {
+      try {
+        const responseData = await sendRequest(
+          "http://localhost:5000/api/users/signup",
+          "POST",
+          JSON.stringify({
+            name: formState.inputs.name.value,
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          }),
+          {
+            "Content-Type": "application/json",
+          }
+        );
+
+        login(responseData.user.id);
+      } catch (err) {
+        toast.error(err.message, {
+          style: { background: "#2b2b2b", color: "#fff" },
+          duration: 2000,
+        });
+      }
+    }
   };
 
   return (
     <React.Fragment>
+      {isLoading ? <LoadingSpinner asOverlay /> : null}
+      <Toaster position='top-right' reverseOrder={false} />
       <Form onSubmit={authSubmitHandler}>
         {isLoginMode ? (
           <h2 className='center'>Login</h2>
@@ -82,7 +131,6 @@ const Auth = () => {
             onInput={inputHandler}
           />
         )}
-
         <Input
           id='email'
           element='input'
@@ -97,8 +145,8 @@ const Auth = () => {
           element='input'
           type='password'
           label='Password'
-          validators={[VALIDATOR_MINLENGTH(5)]}
-          errorText='Please enter a valid password (at least 5 characters).'
+          validators={[VALIDATOR_MINLENGTH(6)]}
+          errorText='Please enter a valid password (at least 6 characters).'
           onInput={inputHandler}
         />
         <ButtonContainer>

@@ -3,7 +3,7 @@ import { useAuth } from "../../../../core/hooks/useAuth";
 import { List } from "./styles";
 
 const NavLinks = () => {
-  const { isLogged, logout } = useAuth();
+  const { userId, isLogged, logout } = useAuth();
 
   return (
     <List>
@@ -14,7 +14,7 @@ const NavLinks = () => {
       </li>
       {isLogged && (
         <li>
-          <NavLink to='/u1/places'>My Places</NavLink>
+          <NavLink to={`/${userId}/places`}>My Places</NavLink>
         </li>
       )}
       {isLogged && (
