@@ -34,7 +34,7 @@ const MainNavigation = () => {
         </NavigationButton>
 
         <Title>
-          <Link to='/'>Your Places</Link>
+          <Link to="/">Your Places</Link>
         </Title>
         <NavigationContainer>
           <NavLinks />

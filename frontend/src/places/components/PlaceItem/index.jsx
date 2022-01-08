@@ -1,5 +1,10 @@
 import React, { useState } from "react";
+
+import toast, { Toaster } from "react-hot-toast";
+
 import Button from "../../../shared/components/FormElements/Button";
+import Modal from "../../../shared/components/UIElements/Modal/index";
+import Map from "../../../shared/components/UIElements/Map";
 
 import {
   Card,
@@ -12,21 +17,43 @@ import {
   DeleteModalContent,
 } from "./styles";
 
-import Modal from "../../../shared/components/UIElements/Modal/index";
-import Map from "../../../shared/components/UIElements/Map";
 import { useAuth } from "../../../core/hooks/useAuth";
+import { useHttp } from "../../../core/hooks/useHttp";
+import LoadingSpinner from "../../../shared/components/UIElements/LoadingSpinner";
 
-const PlaceItem = ({ id, image, title, address, description, coordinates }) => {
+const PlaceItem = ({
+  id: placeId,
+  image,
+  title,
+  address,
+  creatorId,
+  description,
+  coordinates,
+  onDelete,
+}) => {
   const [showMap, setShowMap] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const { isLoading, sendRequest } = useHttp();
 
-  const { isLogged } = useAuth();
+  const { userId } = useAuth();
 
-  const deletePlaceHandler = () => {
-    console.log("delete");
+  const deletePlaceHandler = async () => {
+    const url = `http://localhost:5000/api/places/${placeId}`;
+    setShowDelete(false);
+    try {
+      await sendRequest(url, "DELETE");
+      onDelete(placeId);
+    } catch (err) {
+      toast.error(err.message, {
+        style: { background: "#2b2b2b", color: "#fff" },
+        duration: 2000,
+      });
+    }
   };
+
   return (
     <React.Fragment>
+      <Toaster position="top-right" reverseOrder={false} />
       {/* Map Modal */}
       <Modal
         show={showMap}
@@ -42,7 +69,7 @@ const PlaceItem = ({ id, image, title, address, description, coordinates }) => {
       <Modal
         show={showDelete}
         onCancel={() => setShowDelete(false)}
-        header='Are you sure ?'
+        header="Are you sure ?"
         footer={
           <>
             <ButtonsContainer>
@@ -65,34 +92,38 @@ const PlaceItem = ({ id, image, title, address, description, coordinates }) => {
           <hr />
         </DeleteModalContent>
       </Modal>
-      <ListItem>
-        <Card>
-          <ImageContainer>
-            <img src={image} alt={title} />
-          </ImageContainer>
+      {isLoading ? (
+        <LoadingSpinner asOverlay />
+      ) : (
+        <ListItem>
+          <Card>
+            <ImageContainer>
+              <img src={image} alt={title} />
+            </ImageContainer>
 
-          <InfoContainer>
-            <h2>{title}</h2>
-            <h3>{address}</h3>
-            <p>{description}</p>
-          </InfoContainer>
+            <InfoContainer>
+              <h2>{title}</h2>
+              <h3>{address}</h3>
+              <p>{description}</p>
+            </InfoContainer>
 
-          <ActionsContainer>
-            <Button inverse onClick={() => setShowMap(true)}>
-              View on Map
-            </Button>
+            <ActionsContainer>
+              <Button inverse onClick={() => setShowMap(true)}>
+                View on Map
+              </Button>
 
-            {isLogged ? (
-              <>
-                <Button to={`/places/${id}`}>Edit</Button>
-                <Button danger onClick={() => setShowDelete(true)}>
-                  Delete
-                </Button>
-              </>
-            ) : null}
-          </ActionsContainer>
-        </Card>
-      </ListItem>
+              {creatorId === userId ? (
+                <>
+                  <Button to={`/places/${placeId}`}>Edit</Button>
+                  <Button danger onClick={() => setShowDelete(true)}>
+                    Delete
+                  </Button>
+                </>
+              ) : null}
+            </ActionsContainer>
+          </Card>
+        </ListItem>
+      )}
     </React.Fragment>
   );
 };

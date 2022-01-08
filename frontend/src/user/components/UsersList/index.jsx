@@ -6,7 +6,7 @@ import { UsersItemsList } from "./styles";
 const UsersList = ({ items }) => {
   if (items.length === 0) {
     return (
-      <div className='center'>
+      <div className="center">
         <h2>No users found.</h2>
       </div>
     );
@@ -20,7 +20,7 @@ const UsersList = ({ items }) => {
           id={user.id}
           image={user.image}
           name={user.name}
-          placeCount={user.places}
+          placeCount={user.places.length}
         />
       ))}
     </UsersItemsList>

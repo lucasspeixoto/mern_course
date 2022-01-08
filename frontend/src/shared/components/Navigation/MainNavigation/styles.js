@@ -41,5 +41,5 @@ export const NavigationContainer = styled.nav`
 `;
 
 export const NavigationDrawerContainer = styled.nav`
-    height: 100%;
-`
+  height: 100%;
+`;

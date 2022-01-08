@@ -31,7 +31,7 @@ const Input = ({
   validators,
   onInput,
   initialValue,
-  initialValid
+  initialValid,
 }) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: initialValue || "",

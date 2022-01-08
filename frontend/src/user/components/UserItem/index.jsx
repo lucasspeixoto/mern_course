@@ -9,9 +9,7 @@ import {
   UserItemList,
 } from "./styles";
 
-
 const UserItem = ({ id, image, name, placeCount }) => {
-  
   return (
     <UserItemList>
       <UserItemCard>
