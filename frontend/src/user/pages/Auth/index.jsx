@@ -83,7 +83,7 @@ const Auth = () => {
           }
         );
 
-        login(responseData.user.id);
+        login(responseData.userId, responseData.token);
       } catch (err) {
         toast.error(err.message, {
           style: { background: "#2b2b2b", color: "#fff" },
@@ -103,7 +103,7 @@ const Auth = () => {
           formData
         );
 
-        login(responseData.user.id);
+        login(responseData.userId, responseData.token);
       } catch (err) {
         toast.error(err.message, {
           style: { background: "#2b2b2b", color: "#fff" },

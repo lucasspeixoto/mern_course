@@ -35,13 +35,15 @@ const PlaceItem = ({
   const [showDelete, setShowDelete] = useState(false);
   const { isLoading, sendRequest } = useHttp();
 
-  const { userId } = useAuth();
+  const { userId, token } = useAuth();
 
   const deletePlaceHandler = async () => {
     const url = `http://localhost:5000/api/places/${placeId}`;
     setShowDelete(false);
     try {
-      await sendRequest(url, "DELETE");
+      await sendRequest(url, "DELETE", null, {
+        Authorization: `Bearer ${token}`,
+      });
       onDelete(placeId);
     } catch (err) {
       toast.error(err.message, {
