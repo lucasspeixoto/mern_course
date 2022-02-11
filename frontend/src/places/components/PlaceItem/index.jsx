@@ -38,7 +38,7 @@ const PlaceItem = ({
   const { userId, token } = useAuth();
 
   const deletePlaceHandler = async () => {
-    const url = `http://localhost:5000/api/places/${placeId}`;
+    const url = `${process.env.REACT_APP_BACKEND_URL}/places/${placeId}`;
     setShowDelete(false);
     try {
       await sendRequest(url, "DELETE", null, {
@@ -100,7 +100,10 @@ const PlaceItem = ({
         <ListItem>
           <Card>
             <ImageContainer>
-              <img src={`http://localhost:5000/${image}`} alt={title} />
+              <img
+                src={`${process.env.REACT_APP_ASSET_URL}/${image}`}
+                alt={title}
+              />
             </ImageContainer>
 
             <InfoContainer>

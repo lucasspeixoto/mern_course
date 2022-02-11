@@ -105,4 +105,7 @@ dist
 
 /material
 
-envs.js
+nodemon.json
+
+
+

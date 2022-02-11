@@ -38,7 +38,7 @@ const UpdatePlace = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const url = `http://localhost:5000/api/places/${placeId}`;
+    const url = `${process.env.REACT_APP_BACKEND_URL}/places/${placeId}`;
     const getPlace = async () => {
       try {
         const responseData = await sendRequest(url);
@@ -71,7 +71,7 @@ const UpdatePlace = () => {
   const placeUpdateSubmitHandler = async (event) => {
     event.preventDefault();
 
-    const url = `http://localhost:5000/api/places/${placeId}`;
+    const url = `${process.env.REACT_APP_BACKEND_URL}/places/${placeId}`;
 
     try {
       await sendRequest(

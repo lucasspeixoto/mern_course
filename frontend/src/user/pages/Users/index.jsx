@@ -13,7 +13,7 @@ const Users = () => {
     const getUsers = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users"
+          `${process.env.REACT_APP_BACKEND_URL}/users`
         );
         setUsers(responseData.users);
       } catch (err) {
@@ -29,7 +29,7 @@ const Users = () => {
 
   return (
     <React.Fragment>
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position='top-right' reverseOrder={false} />
       {isLoading && users ? <LoadingSpinner /> : <UsersList items={users} />}
     </React.Fragment>
   );
