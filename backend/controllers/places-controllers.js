@@ -97,6 +97,8 @@ const createPlace = async (req, res, next) => {
     return next(error);
   }
 
+  console.log(req.file.path)
+
   const createdPlace = new Place({
     title,
     description,
